@@ -1,0 +1,22 @@
+#main-view {
+  margin: 1rem;
+}
+
+.principal-section {
+  width: 75%;
+}
+
+.no-burguer {
+  background-color: rgb(30 27 75 / var(--tw-bg-opacity));
+  transition: transform 3s ease;
+}
+
+.rot {
+  transition: transform 1s ease;
+  transform: rotate(180deg);
+  
+}
+.rot-2 {
+  transition: transform 1s ease;
+  transform: rotate(-180deg);
+}
