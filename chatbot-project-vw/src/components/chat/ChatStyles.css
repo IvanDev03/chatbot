@@ -1,0 +1,14 @@
+#conversation {
+    margin-left: 1.5rem !important;
+    border-radius: 0.85rem;
+}
+#message-bot {
+    width: 96%;
+    margin: 1rem 0 1rem 1rem;
+}
+
+#nav-chat {
+    height: 10%;
+    border-bottom: 1px solid rgb(30 27 75 / var(--tw-bg-opacity));
+    border-radius: 0.85rem 0.85rem 0 0;
+}

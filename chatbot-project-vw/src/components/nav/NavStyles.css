@@ -1,0 +1,38 @@
+.burguer-opened {
+    background-color: rgb(30 27 75 / var(--tw-bg-opacity));
+    border-radius: 0.85rem;
+    transition: background-color 1s ease;
+    width: 30%;
+}
+
+.burguer-closed {
+    background-color: #ffff;
+    transition: background-color 1s ease;
+    border-radius: 0.5rem;
+    border-color: rgb(30 27 75 / var(--tw-bg-opacity));
+    animation: closeBackground 1s forward;
+}
+
+.rot {
+    transition: transform 1s ease;
+    transform: rotate(180deg);
+}
+
+.rot-2 {
+    transition: transform 1s ease;
+    transform: rotate(-180deg);
+}
+
+@keyframes closeBackground {
+    0% {
+        width: 100%;
+    }
+
+    50% {
+        width: 50%;
+    }
+
+    100% {
+        width: 0%;
+    }
+}
