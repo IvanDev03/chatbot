@@ -10,11 +10,11 @@ export const Navbar = () => {
 
     const toggleNav = () => {
         setNavState(!navState);
-        setNavProperties(!navState);
+        setNavProperties(navState);
     };
 
     return (
-        <aside className={`burguer-${navState ? 'opened' : 'closed'}`} id='tab-aside'>
+        <aside className= {`burguer-${navState ? 'opened' : 'closed'} `} id='tab-aside'>
             <img
                 src={image}
                 className={`m-4 cursor-pointer ${navState ? 'rot' : 'rot-2'}`}
@@ -29,6 +29,8 @@ export const Navbar = () => {
 const setNavProperties = (state: boolean) => {
     const asideMain = document.getElementById('tab-aside');
     const image = document.getElementById('nav-image');
+
+    asideMain?.classList.toggle('animate-flip-x', !state)
 
     if (asideMain && image) {
         asideMain.classList.toggle('burguer-closed', !state);

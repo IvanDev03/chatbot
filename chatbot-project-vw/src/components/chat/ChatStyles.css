@@ -13,8 +13,9 @@
     border-radius: 0.85rem 0.85rem 0 0;
 }
 
-#history-messages {
-    overflow-y: scroll;
+
+#chatbot-messages section {
+    scroll-snap-align: start;
 }
 
 .card {
@@ -31,3 +32,15 @@ strong {
     font-variation-settings:
       "wdth" 100;
 }
+
+::-webkit-scrollbar {
+    width: 10px; /* Ancho de la barra de scroll */
+    height: 10px; /* Altura de la barra de scroll */
+    background-color: rgb(255 255 255); /* Color de fondo de la barra de scroll */
+    border-radius: 5px; /* Radio de borde de la barra de scroll */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(30 27 75); /* Color de fondo del thumb de la barra de scroll */
+    border-radius: 5px; /* Radio de borde del thumb de la barra de scroll */
+  }
