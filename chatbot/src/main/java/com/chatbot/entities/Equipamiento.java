@@ -1,11 +1,15 @@
 package com.chatbot.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Table(name = "kia_sportage_equipamiento")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Equipamiento {
     @Id
     @Column(name = "id_equipamiento")
