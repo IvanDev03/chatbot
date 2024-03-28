@@ -44,16 +44,19 @@ export const History: React.FC<ConversationProps> = ({ botname }) => {
                     upStage();
                     current.value = '';
 
-                    setTimeout(() => {
-
-                        const models = getCarModels()
-
-                        setMessages(prevMessages => [
+                    setTimeout(async () => {
+                        try {
+                          const modelsData = await getCarModels(); // Await for Promise to resolve
+                          console.log(modelsData); // Now you can log the JSON data
+                          setMessages(prevMessages => [
                             ...prevMessages,
                             { text: '¿En qué vehículo estás interesado?', user: botname }
-                        ]);
-                    }, 1000);
-                    break
+                          ]);
+                        } catch (error) {
+                          console.error('Error fetching car models:', error);
+                        }
+                      }, 1000);
+                      break;
                 }
 
             
