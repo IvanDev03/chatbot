@@ -1,6 +1,7 @@
 package com.chatbot.controller;
 
 import com.chatbot.dto.ModeloDTO;
+import com.chatbot.dto.ModeloByIdAndNameDTO;
 import com.chatbot.repositories.ModeloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,12 @@ public class ModeloController {
         return new ResponseEntity<>(modelos, HttpStatus.OK);
     }
 
-
+    @GetMapping("/getmodelosnames")
+    public ResponseEntity<List<ModeloByIdAndNameDTO>> getModelosNames() {
+        List<ModeloByIdAndNameDTO> modelosNames = new ArrayList<>();
+        modeloRepository.findAll().forEach(modelo -> {
+            modelosNames.add(new ModeloByIdAndNameDTO(modelo.getId(), modelo.getName()));
+        });
+        return new ResponseEntity<>(modelosNames, HttpStatus.OK);
+    }
 }
