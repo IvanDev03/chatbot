@@ -13,31 +13,29 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/properties")
-public class PropertiesController {
+@RequestMapping("/equipamiento")
+public class EquipamientoController{
 
     @Autowired
     private EquipamientoRepository equipamientoRepository;
 
-    @GetMapping("/getproperties")
+    @GetMapping("/getequipamiento")
     public ResponseEntity<List<EquipamientoDTO>> getQuestions() {
         List<EquipamientoDTO> questions = new ArrayList<>();
         equipamientoRepository.findAll().forEach(equipamiento -> {
             questions.add(new EquipamientoDTO(
                     equipamiento.getId(),
-                    equipamiento.getIdModelo(),
                     equipamiento.getNombreEquipamiento(),
                     equipamiento.getDescripcion()));
         });
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
-    @GetMapping("/getpropertiesbyid/{id}")
+    @GetMapping("/getequipamientobyid/{id}")
     public ResponseEntity<Equipamiento> findByid(@PathVariable Long id) {
 
         return equipamientoRepository.findById(id).isPresent() ? new ResponseEntity<>(equipamientoRepository
-                .findById(id)
-                .get(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                .findById(id).get(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
