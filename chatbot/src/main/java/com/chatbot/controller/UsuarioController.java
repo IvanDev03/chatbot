@@ -8,8 +8,11 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/usuario")
 public class UsuarioController {
     @Autowired
     public UsuarioRepository usuarioRepository;
@@ -22,4 +25,17 @@ public class UsuarioController {
         return ResponseEntity.ok(new UsuarioDTO(usuario.getId(), usuario.getNombre()));
     }
 
+    @GetMapping("/getusuarios")
+    public ResponseEntity<List<UsuarioDTO>>getUsuario(){
+        List<UsuarioDTO> usuarios = new ArrayList<>();
+        usuarioRepository.findAll().forEach(usuario -> {
+            usuarios.add(new UsuarioDTO(usuario.getId(), usuario.getNombre()));
+        });
+        return ResponseEntity.ok(usuarios);
+    }
+    @GetMapping("/getusuariobyid/{id}")
+    public ResponseEntity<UsuarioDTO> getUsuarioById(@PathVariable Long id) {
+        Usuario usuario = usuarioRepository.findById(id).get();
+        return ResponseEntity.ok(new UsuarioDTO(usuario.getId(), usuario.getNombre()));
+    }
 }
