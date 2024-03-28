@@ -1,6 +1,7 @@
 import React from "react";
 import './ChatStyles.css'
 import { History } from "./History";
+import { ConversationProps } from "../../interfaces/ConversationProps";
 
 export const Conversation: React.FC<ConversationProps> = ({ botname, username }) => {
     return (<>

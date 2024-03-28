@@ -2,6 +2,7 @@
     margin-left: 1.5rem !important;
     border-radius: 0.85rem;
 }
+
 #message-bot {
     width: 96%;
     margin: 1rem 0 1rem 1rem;
@@ -14,7 +15,7 @@
 }
 
 
-#chatbot-messages section {
+#scrool-div div {
     scroll-snap-align: start;
 }
 
