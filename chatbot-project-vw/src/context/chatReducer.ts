@@ -36,11 +36,11 @@ export const chatReducer = ( state: Conversation, action: ChatAction) : Conversa
 
         case "clearHistory": {
             return {
-                username: '',
+                username: 'Unknown',
                 messages: [],
                 stage: 0,
                 carModel: 0,
-                disableChat: false,
+                disableChat: true,
             }
         }
 
