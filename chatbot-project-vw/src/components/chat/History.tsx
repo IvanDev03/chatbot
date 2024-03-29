@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import { AvatarImage } from "./AvatarImage"
-import userIcon from '../../assets/media/Felipe-img.jpg'
+import userIcon from '../../assets/media/ico.jpg'
 import bender from '../../assets/media/bender.png'
 import { Card } from "./Card"
 import send from './../../assets/media/send-icon.svg'
