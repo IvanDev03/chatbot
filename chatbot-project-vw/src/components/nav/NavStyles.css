@@ -12,7 +12,6 @@
     border-radius: 0.5rem;
     border-color: rgb(30 27 75 / var(--tw-bg-opacity));
     animation: closeBackground 1s forward;
-    height: 9%;
 }
 
 .rot {
@@ -23,6 +22,11 @@
 .rot-2 {
     transition: transform 1s ease;
     transform: rotate(-180deg);
+}
+
+.rot-3 {
+    transition: transform 1s ease;
+    transform: rotate(360);
 }
 
 @keyframes closeBackground {
