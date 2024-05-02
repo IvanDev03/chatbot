@@ -22,8 +22,10 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
 
     const messageRef = useRef<HTMLInputElement | null>(null)
     const [messages, setMessages] = useState([...conversation.messages])
+    const noNumbers = /[^0-9]/g;
 
     if (messages.length === 0) {
+        
         setMessages([...messages, { text: 'Hola, para empezar. ¿Cuál es tu nombre?', user: botname }])
     }
 
@@ -47,41 +49,55 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
 
     const submitMessage = async () => {
         if (messageRef.current) {
-
             const { current } = messageRef;
+            const onlyLetters = /^[A-Za-z]+$/; // Expresión regular que coincide solo con letras
+    
+            if (!onlyLetters.test(current.value)) {
+                alert("Por favor, ingrese solo letras");
+                return;
+            }
 
 
             switch (conversation.stage) {
                 case 0: {
-                    setMessages([...messages, { text: current.value, user: username }]);
-                    handleUsername(current.value);
-                    upStage(1);
-                    current.value = '';
-
-                    setTimeout(async () => {
-                        try {
-                            const modelsData: CarModels[] = await getCarModels()
-                            console.log(modelsData)
-
-                            const carToMessage: Message[] = []
-
-                            setQtyCars(modelsData.length)
-
-                            if (modelsData.length > 0) {
-                                modelsData.forEach(model => {
-                                    carToMessage.push({ text: `${model.id}. ${model.name}`, user: botname })
-                                })
+                    if(noNumbers.test(current.value) ){
+                        setMessages([...messages, { text: current.value, user: username }]);
+                        handleUsername(current.value);
+                        upStage(1);
+                        current.value = '';
+    
+                        setTimeout(async () => {
+                            try {
+                                const modelsData: CarModels[] = await getCarModels()
+                                console.log(modelsData)
+    
+                                const carToMessage: Message[] = []
+    
+                                setQtyCars(modelsData.length)
+    
+                                if (modelsData.length > 0) {
+                                    modelsData.forEach(model => {
+                                        carToMessage.push({ text: `${model.id}. ${model.name}`, user: botname })
+                                    })
+                                }
+    
+                                setMessages(prevMessages => [
+                                    ...prevMessages,
+                                    { text: `Un placer hablar contigo. ¿En qué vehículo estás interesado?`, user: botname },
+                                    ...carToMessage
+                                ]);
+                            } catch (error) {
+                                console.error('Error fetching car models:', error);
                             }
-
-                            setMessages(prevMessages => [
-                                ...prevMessages,
-                                { text: `Un placer hablar contigo. ¿En qué vehículo estás interesado?`, user: botname },
-                                ...carToMessage
-                            ]);
-                        } catch (error) {
-                            console.error('Error fetching car models:', error);
-                        }
-                    }, 1000);
+                        }, 1000);
+                    }else{
+                        setMessages(prevMessages => [
+                            ...prevMessages,
+                            { text: current.value, user: username },
+                            { text: `Ingresaste un nombre invalido`, user: botname }
+                        ]);
+                    }
+                    
 
 
                     break;
@@ -89,39 +105,48 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
 
                 case 1: {
                     let chosenVehicle = 0
-                    setMessages([...messages, { text: current.value, user: username }])
-                    chosenVehicle = parseInt(current.value)
-                    current.value = ''
-
-                    setTimeout(async () => {
-                        if (!Number.isNaN(chosenVehicle)) {
-                            if (qtyCars === 0) {
+                    if(Number.isInteger(parseInt(current.value))) {
+                        setMessages(prevMessages => [
+                            ...prevMessages,
+                            { text: current.value, user: username },
+                            { text: `Ingresaste una opcion invalida`, user: botname }
+                        ]);
+                    }else{
+                        setMessages([...messages, { text: current.value, user: username }])
+                        chosenVehicle = parseInt(current.value)
+                        current.value = ''
+    
+                        setTimeout(async () => {
+                            if (!Number.isNaN(chosenVehicle)) {
+                                if (qtyCars === 0) {
+                                    setMessages(prevMessages => [
+                                        ...prevMessages,
+                                        { text: `Lo siento ${username} no tenemos automóviles disponibles`, user: botname }])
+                                } else {
+                                    if (chosenVehicle <= qtyCars) {
+                                        setMessages(prevMessages => [
+                                            ...prevMessages,
+                                            { text: `Buena elección ${username}`, user: botname },
+                                            { text: `¿Qué deseas saber?`, user: botname },
+                                            { text: `1. Equipamiento`, user: botname },
+                                            { text: `2. Propiedades`, user: botname }
+                                        ])
+                                        setChosenCar(chosenVehicle)
+                                        upStage(1)
+                                    } else {
+                                        setMessages(prevMessages => [
+                                            ...prevMessages,
+                                            { text: `Ups ${username}... Escogiste una opción incorrecta, vuelve a seleccionar. Opciones 1 o 2`, user: botname }])
+                                    }
+                                }
+                            } else {
                                 setMessages(prevMessages => [
                                     ...prevMessages,
-                                    { text: `Lo siento ${username} no tenemos automóviles disponibles`, user: botname }])
-                            } else {
-                                if (chosenVehicle <= qtyCars) {
-                                    setMessages(prevMessages => [
-                                        ...prevMessages,
-                                        { text: `Buena elección ${username}`, user: botname },
-                                        { text: `¿Qué deseas saber?`, user: botname },
-                                        { text: `1. Equipamiento`, user: botname },
-                                        { text: `2. Propiedades`, user: botname }
-                                    ])
-                                    setChosenCar(chosenVehicle)
-                                    upStage(1)
-                                } else {
-                                    setMessages(prevMessages => [
-                                        ...prevMessages,
-                                        { text: `Ups ${username}... Escogiste una opción incorrecta, vuelve a seleccionar. Opciones 1 o 2`, user: botname }])
-                                }
+                                    { text: `Ups ${username}... Escogiste una opción incorrecta. Opciones 1 o 2`, user: botname }])
                             }
-                        } else {
-                            setMessages(prevMessages => [
-                                ...prevMessages,
-                                { text: `Ups ${username}... Escogiste una opción incorrecta. Opciones 1 o 2`, user: botname }])
-                        }
-                    }, 1000)
+                        }, 1000)
+                    }
+                 
 
                     break
                 }
@@ -244,13 +269,14 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
 
 
     return (<>
-        <div className="flex flex-row" style={{ borderTop: '1px solid rgb(30 27 75 / var(--tw-bg-opacity))' }}>
+        <div className="flex flex-row" style={{ borderTop: '1px solid rgb(30 27 75 / var(--tw-bg-opacity))',colorScheme: 'light only' }}>
             <input
                 type="text"
                 disabled={!inputEnabled}
                 ref={messageRef}
                 id="message-bot"
-                className="bg-gray-50 border shadow-xl text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border shadow-xl text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-indigo-500 dark:focus:border-indigo
+                -500"
                 placeholder={`¡Chatea con ${botname}`}
                 onKeyUp={(e) => {
                     if (e.key === "Enter") {

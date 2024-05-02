@@ -4,12 +4,12 @@ interface CardBody {
     name: string,
     text: string,
     id: string,
-    bot: string
+    bot?: string
 }
 
-export const Card: React.FC<CardBody> = ({ name, text, id, bot}) => {
+export const Card: React.FC<CardBody> = ({ name, text, id}) => {
     return (<>
-        <section className="animate-squeeze bg-white border-indigo-950 shadow-xl dark:bg-gray-800 dark:border-gray-700 flex flex-row w-30 h-30 rounded-lg" 
+        <section className="animate-squeeze bg-white border-indigo-950 shadow-xl  dark:border-gray-700 flex flex-row w-30 h-30 rounded-lg" 
         id={id}
         style={{ marginRight: '0.75rem', padding: '0.5px 1rem 1rem 1rem', maxWidth: '500px'}}>
             <label>

@@ -13,7 +13,7 @@ export const Conversation: React.FC<InitialProps> = ({ botname}) => {
 
     return (
     <>
-        <section className='bg-white border shadow-2xl dark:bg-gray-800 dark:border-gray-700 flex flex-row w-full h-full conversation'>
+        <section className='bg-white border shadow-2xl dark:border-gray-700 flex flex-row w-full h-full conversation'>
             <section className="flex flex-col-reverse justify-between" style={{ width: '100%' }}>
                 
                 <History botname={botname} username={conversation.username}></History>
