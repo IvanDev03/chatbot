@@ -38,7 +38,6 @@ public class EquipamientoController{
         return equipamientoRepository.findById(id).isPresent() ? new ResponseEntity<>(equipamientoRepository
                 .findById(id).get(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
 }
 
 
