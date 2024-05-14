@@ -37,7 +37,7 @@ public class PropiedadesController {
         return new ResponseEntity<>(properties, HttpStatus.OK);
     }
 
-    @GetMapping("/getpropiedadesbyid/{id}")
+    @GetMapping("/get-propiedades-by-id/{id}")
     public ResponseEntity<Propiedades> findByid(@PathVariable Long id) {
 
         return propiedadesRepository.findById(id).isPresent() ? new ResponseEntity<>(propiedadesRepository

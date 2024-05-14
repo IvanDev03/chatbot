@@ -31,7 +31,7 @@ public class ModeloController {
         return new ResponseEntity<>(modelos, HttpStatus.OK);
     }
 
-    @GetMapping("/getmodelosnames")
+    @GetMapping("/get-modelos-names")
     public ResponseEntity<List<ModeloByIdAndNameDTO>> getModelosNames() {
         List<ModeloByIdAndNameDTO> modelosNames = new ArrayList<>();
         modeloRepository.findAll().forEach(modelo -> {

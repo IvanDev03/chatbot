@@ -20,7 +20,7 @@ public class EquipamientoController{
     @Autowired
     private EquipamientoRepository equipamientoRepository;
 
-    @GetMapping("/getequipamiento")
+    @GetMapping("/get-equipamientos")
     public ResponseEntity<List<EquipamientoDTO>> getQuestions() {
         List<EquipamientoDTO> questions = new ArrayList<>();
         equipamientoRepository.findAll().forEach(equipamiento -> {
@@ -32,7 +32,7 @@ public class EquipamientoController{
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
-    @GetMapping("/getequipamientobyid/{id}")
+    @GetMapping("/get-equipamiento-by-id/{id}")
     public ResponseEntity<Equipamiento> findByid(@PathVariable Long id) {
 
         return equipamientoRepository.findById(id).isPresent() ? new ResponseEntity<>(equipamientoRepository
