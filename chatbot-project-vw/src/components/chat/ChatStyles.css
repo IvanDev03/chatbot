@@ -16,7 +16,7 @@
 
 
 #scrool-div div {
-    scroll-snap-align: start;
+    scroll-snap-align: end;
 }
 
 .card {

@@ -5,7 +5,8 @@ type ChatContextProps = {
     conversation: Conversation,
     handleUsername: (name: string) => void,
     handleMessages: (message: Message) => void,
-    upStage: () => void
+    upStage: (num: number) => void,
+    deleteConv: (bool: boolean) => void
 }
 
 export const ChatContext = createContext<ChatContextProps>({} as ChatContextProps)

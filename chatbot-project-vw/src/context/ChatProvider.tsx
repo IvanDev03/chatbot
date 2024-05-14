@@ -4,7 +4,7 @@ import { ChatContext } from "./ChatContext"
 import { chatReducer } from "./chatReducer"
 
 const INITIAL_STATE : Conversation = {
-    username: '',
+    username: 'Unknown',
     messages: [],
     stage: 0,
     carModel: 0,
@@ -27,8 +27,12 @@ export const ChatProvider = ({children} : ChatProviderProps) => {
         dispatch({type: "addMessage", payload: message})
     }
 
-    const upStage = () => {
-        dispatch({type: "upStage", payload: 1})
+    const upStage = (num: number) => {
+        dispatch({type: "upStage", payload: num})
+    }
+
+    const deleteConv = () => {
+        dispatch({type: "clearHistory", payload: INITIAL_STATE})
     }
 
 
@@ -37,7 +41,8 @@ export const ChatProvider = ({children} : ChatProviderProps) => {
             conversation,
             handleUsername,
             handleMessages,
-            upStage
+            upStage,
+            deleteConv
         }}>
             {children}
         </ChatContext.Provider>
