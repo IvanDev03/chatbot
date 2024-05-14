@@ -22,7 +22,6 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
 
     const messageRef = useRef<HTMLInputElement | null>(null)
     const [messages, setMessages] = useState([...conversation.messages])
-    const noNumbers = /[^0-9]/g;
 
     if (messages.length === 0) {
         
@@ -45,22 +44,20 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
             conversationDeletedRef.current = false;
         }
 
-    }, [conversation.disableChat, deleteConv])
+    },[conversation.disableChat , deleteConv])
 
     const submitMessage = async () => {
         if (messageRef.current) {
             const { current } = messageRef;
-            const onlyLetters = /^[A-Za-z]+$/; // Expresión regular que coincide solo con letras
+            const onlyLetters = /^[A-Za-z]+$/; 
     
-            if (!onlyLetters.test(current.value)) {
-                alert("Por favor, ingrese solo letras");
-                return;
-            }
-
+            
 
             switch (conversation.stage) {
                 case 0: {
-                    if(noNumbers.test(current.value) ){
+                    if(onlyLetters.test(current.value) && current.value.length < 15 ){
+
+
                         setMessages([...messages, { text: current.value, user: username }]);
                         handleUsername(current.value);
                         upStage(1);
@@ -94,7 +91,7 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
                         setMessages(prevMessages => [
                             ...prevMessages,
                             { text: current.value, user: username },
-                            { text: `Ingresaste un nombre invalido`, user: botname }
+                            { text: `Ingresaste un nombre invalido, vuelve a ingresar un nombre`, user: botname }
                         ]);
                     }
                     
@@ -105,7 +102,7 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
 
                 case 1: {
                     let chosenVehicle = 0
-                    if(Number.isInteger(parseInt(current.value))) {
+                    if(!Number.isInteger(parseInt(current.value))) {
                         setMessages(prevMessages => [
                             ...prevMessages,
                             { text: current.value, user: username },
@@ -144,7 +141,7 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
                                     ...prevMessages,
                                     { text: `Ups ${username}... Escogiste una opción incorrecta. Opciones 1 o 2`, user: botname }])
                             }
-                        }, 1000)
+                        }, 500)
                     }
                  
 
@@ -251,7 +248,9 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
                             ...messages,
                             { text: current.value, user: username },
                             ...equipmentsToMessage,
-                            { text: `Eso es todo ${username}, Gracias por usar nuestro servicio`, user: botname }])
+                            { text: `Eso es todo ${username}, Gracias por usar nuestro servicio`, user: botname },
+                            { text: `${username}!, si quieres volver a preguntarme algo favor refesca la pestaña o pulsa 'F5'`, user: botname }
+                        ])
                     }, 1000)
 
                     setInputEnabled(false);

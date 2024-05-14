@@ -31,8 +31,8 @@ export const ChatProvider = ({children} : ChatProviderProps) => {
         dispatch({type: "upStage", payload: num})
     }
 
-    const deleteConv = (state: boolean) => {
-        dispatch({type: "clearHistory", payload: state})
+    const deleteConv = () => {
+        dispatch({type: "clearHistory", payload: INITIAL_STATE})
     }
 
 

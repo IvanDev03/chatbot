@@ -2,7 +2,7 @@ import { Conversation, Message } from "../interfaces/conversationInterfaces";
 
 type ChatAction =  
     {type: 'addMessage', payload: Message} |
-    {type: 'clearHistory', payload: boolean} |
+    {type: 'clearHistory', payload: Conversation} |
     {type: 'addUserName', payload: {user: string}} |
     {type: 'upStage', payload: number}
 
@@ -35,13 +35,7 @@ export const chatReducer = ( state: Conversation, action: ChatAction) : Conversa
         }
 
         case "clearHistory": {
-            return {
-                username: 'Unknown',
-                messages: [],
-                stage: 0,
-                carModel: 0,
-                disableChat: true,
-            }
+            return action.payload;
         }
 
         default: {
