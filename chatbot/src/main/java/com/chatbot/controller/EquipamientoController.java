@@ -13,13 +13,13 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5174")
 @RequestMapping("/equipamiento")
 public class EquipamientoController{
 
     @Autowired
     private EquipamientoRepository equipamientoRepository;
-
+    @CrossOrigin(origins = "http://localhost:5174")
     @GetMapping("/get-equipamientos")
     public ResponseEntity<List<EquipamientoDTO>> getQuestions() {
         List<EquipamientoDTO> questions = new ArrayList<>();
@@ -31,7 +31,7 @@ public class EquipamientoController{
         });
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:5174")
     @GetMapping("/get-equipamiento-by-id/{id}")
     public ResponseEntity<Equipamiento> findByid(@PathVariable Long id) {
 

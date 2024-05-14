@@ -13,13 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5174")
 @RequestMapping("/propiedades")
 public class PropiedadesController {
 
     @Autowired
     public PropiedadesRepository propiedadesRepository;
 
+    @CrossOrigin(origins = "http://localhost:5174")
     @GetMapping("/getpropiedades")
     public ResponseEntity<List<PropiedadesDTO>> getProperties() {
         List<PropiedadesDTO> properties = new ArrayList<>();
@@ -36,7 +37,7 @@ public class PropiedadesController {
         });
         return new ResponseEntity<>(properties, HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:5174")
     @GetMapping("/get-propiedades-by-id/{id}")
     public ResponseEntity<Propiedades> findByid(@PathVariable Long id) {
 

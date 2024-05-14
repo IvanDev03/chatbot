@@ -16,11 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/modelos")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5174")
 public class ModeloController {
     @Autowired
     private ModeloRepository modeloRepository;
-
+    @CrossOrigin(origins = "http://localhost:5174")
     @GetMapping("/getmodelos")
     public ResponseEntity<List<ModeloDTO>> getModelos() {
 
@@ -30,7 +30,7 @@ public class ModeloController {
         });
         return new ResponseEntity<>(modelos, HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:5174")
     @GetMapping("/get-modelos-names")
     public ResponseEntity<List<ModeloByIdAndNameDTO>> getModelosNames() {
         List<ModeloByIdAndNameDTO> modelosNames = new ArrayList<>();
