@@ -24,7 +24,7 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
     const [messages, setMessages] = useState([...conversation.messages])
 
     if (messages.length === 0) {
-        
+
         setMessages([...messages, { text: 'Hola, para empezar. ¿Cuál es tu nombre?', user: botname }])
     }
 
@@ -44,40 +44,40 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
             conversationDeletedRef.current = false;
         }
 
-    },[conversation.disableChat , deleteConv])
+    }, [conversation.disableChat, deleteConv])
 
     const submitMessage = async () => {
         if (messageRef.current) {
             const { current } = messageRef;
-            const onlyLetters = /^[A-Za-z]+$/; 
-    
-            
+            const onlyLetters = /^[A-Za-z]+$/;
+
+
 
             switch (conversation.stage) {
                 case 0: {
-                    if(onlyLetters.test(current.value) && current.value.length < 15 ){
+                    if (onlyLetters.test(current.value) && current.value.length < 15) {
 
 
                         setMessages([...messages, { text: current.value, user: username }]);
                         handleUsername(current.value);
                         upStage(1);
                         current.value = '';
-    
+
                         setTimeout(async () => {
                             try {
                                 const modelsData: CarModels[] = await getCarModels()
                                 console.log(modelsData)
-    
+
                                 const carToMessage: Message[] = []
-    
+
                                 setQtyCars(modelsData.length)
-    
+
                                 if (modelsData.length > 0) {
                                     modelsData.forEach(model => {
                                         carToMessage.push({ text: `${model.id}. ${model.name}`, user: botname })
                                     })
                                 }
-    
+
                                 setMessages(prevMessages => [
                                     ...prevMessages,
                                     { text: `Un placer hablar contigo. ¿En qué vehículo estás interesado?`, user: botname },
@@ -87,14 +87,13 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
                                 console.error('Error fetching car models:', error);
                             }
                         }, 1000);
-                    }else{
+                    } else {
                         setMessages(prevMessages => [
                             ...prevMessages,
                             { text: current.value, user: username },
                             { text: `Ingresaste un nombre invalido, vuelve a ingresar un nombre`, user: botname }
                         ]);
                     }
-                    
 
 
                     break;
@@ -102,17 +101,18 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
 
                 case 1: {
                     let chosenVehicle = 0
-                    if(!Number.isInteger(parseInt(current.value))) {
+                    const userValue = parseInt(current.value);
+                    if (!Number.isInteger(parseInt(current.value))|| userValue < 1 || userValue > 2 ) {
                         setMessages(prevMessages => [
                             ...prevMessages,
                             { text: current.value, user: username },
                             { text: `Ingresaste una opcion invalida`, user: botname }
                         ]);
-                    }else{
+                    } else {
                         setMessages([...messages, { text: current.value, user: username }])
                         chosenVehicle = parseInt(current.value)
                         current.value = ''
-    
+
                         setTimeout(async () => {
                             if (!Number.isNaN(chosenVehicle)) {
                                 if (qtyCars === 0) {
@@ -143,7 +143,7 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
                             }
                         }, 500)
                     }
-                 
+
 
                     break
                 }
@@ -204,7 +204,7 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
                             }, 1000)
                             setInputEnabled(false);
                             current.value = ''
-                                
+
                             upStage(2)
                             current.disabled = true
                             current.value = ''
@@ -268,7 +268,7 @@ export const History: React.FC<ConversationProps> = ({ botname, username }) => {
 
 
     return (<>
-        <div className="flex flex-row" style={{ borderTop: '1px solid rgb(30 27 75 / var(--tw-bg-opacity))',colorScheme: 'light only' }}>
+        <div className="flex flex-row" style={{ borderTop: '1px solid rgb(30 27 75 / var(--tw-bg-opacity))', colorScheme: 'light only' }}>
             <input
                 type="text"
                 disabled={!inputEnabled}
