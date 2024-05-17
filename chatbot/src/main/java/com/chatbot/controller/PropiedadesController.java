@@ -7,21 +7,20 @@ import com.chatbot.repositories.PropiedadesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5174")
 @RequestMapping("/propiedades")
 public class PropiedadesController {
 
     @Autowired
     public PropiedadesRepository propiedadesRepository;
 
+    @CrossOrigin(origins = "http://localhost:5174")
     @GetMapping("/getpropiedades")
     public ResponseEntity<List<PropiedadesDTO>> getProperties() {
         List<PropiedadesDTO> properties = new ArrayList<>();
@@ -38,8 +37,8 @@ public class PropiedadesController {
         });
         return new ResponseEntity<>(properties, HttpStatus.OK);
     }
-
-    @GetMapping("/getpropiedadesbyid/{id}")
+    @CrossOrigin(origins = "http://localhost:5174")
+    @GetMapping("/get-propiedades-by-id/{id}")
     public ResponseEntity<Propiedades> findByid(@PathVariable Long id) {
 
         return propiedadesRepository.findById(id).isPresent() ? new ResponseEntity<>(propiedadesRepository
